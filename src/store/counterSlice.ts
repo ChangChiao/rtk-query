@@ -1,31 +1,45 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-export interface CounterState {
-  value: number
+export interface UserList {
+  name: string;
+  city: string;
 }
 
-const initialState: CounterState = {
-  value: 0,
-}
+const initialState: UserList[] = []
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const userListSlice = createSlice({
+  name: 'userList',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1
-    },
-    decrement: (state) => {
-      state.value -= 1
-    },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload
+    setUserList: (state, action:PayloadAction<UserList[]>) => {
+      state = action.payload;
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
+export const { setUserList } = userListSlice.actions
 
-export default counterSlice.reducer
+export default userListSlice.reducer
+
+//action 
+export const fetchUserList = () => {
+    return async (dispatch: (arg0: { payload: UserList[]; type: "userList/setUserList"; }) => void) => {
+        const fetchData = async () => {
+            const response = await fetch("https://mocki.io/v1/d4867d8b-b5d5-4a48-a4ab-79131b5809b8");
+      
+            if (!response.ok) {
+              throw new Error("Fetch Fail!!!");
+            }
+      
+            const data = await response.json();
+            return data;
+          };
+      
+          try {
+            const userData = await fetchData();
+            dispatch(userListSlice.actions.setUserList(userData));
+          } catch (error) {}
+    }
+}
