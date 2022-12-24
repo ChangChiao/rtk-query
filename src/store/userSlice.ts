@@ -1,19 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-
-export interface UserList {
+import { AppDispatch } from "./index";
+interface User {
   name: string;
   city: string;
 }
 
-const initialState: UserList[] = []
+export interface UserState {
+  userList: User[]
+}
+
+const initialState: UserState  = {
+  userList: []
+}
 
 export const userListSlice = createSlice({
   name: 'userList',
   initialState,
   reducers: {
-    setUserList: (state, action:PayloadAction<UserList[]>) => {
-      state = action.payload;
+    setUserList: (state, action:PayloadAction<User[]>) => {
+      state.userList = action.payload;
     },
   },
 })
@@ -25,7 +31,7 @@ export default userListSlice.reducer
 
 //action 
 export const fetchUserList = () => {
-    return async (dispatch: (arg0: { payload: UserList[]; type: "userList/setUserList"; }) => void) => {
+    return async (dispatch: AppDispatch) => {
         const fetchData = async () => {
             const response = await fetch("https://mocki.io/v1/d4867d8b-b5d5-4a48-a4ab-79131b5809b8");
       
