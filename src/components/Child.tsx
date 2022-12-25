@@ -2,7 +2,7 @@ import type { RootState } from "../store";
 import { useSelector, useDispatch } from "react-redux";
 // import { decrement, increment } from "../store/counterSlice";
 const Child = () => {
-  const list = useSelector((state: RootState) => state.counter.userList);
+  const list = useSelector((state: RootState) => state.user.userList);
   const dispatch = useDispatch()
 
   return (

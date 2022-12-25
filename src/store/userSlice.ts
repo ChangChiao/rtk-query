@@ -1,10 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { AppDispatch } from "./index";
-interface User {
-  name: string;
-  city: string;
-}
+import { User } from '../types/user';
 
 export interface UserState {
   userList: User[]
